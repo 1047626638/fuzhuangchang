@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace(命名空间)需要和对应的接口的全限定性名保持一致 -->
+<mapper namespace="com.study.ssm.dao.ICommodity">
+	<select id="selectAll" resultType="Commodity" >
+		select * from commodity;
+	</select>
+	<select id="selectCommodityById" resultType="Commodity" parameterType="Integer">
+		select * from commodity where cid=#{_parameter}
+	</select>
+	<delete id="deleteCommodity" parameterType="Integer" >
+		delete from commodity where cid=#{_parameter}
+	</delete>
+	<insert id="insertCommodity" parameterType="Commodity" useGeneratedKeys="true">
+		insert into commodity values(#{cid},#{cname},#{price},#{unit},#{cvalue})
+	</insert>
+	<update id="updateCommodity" parameterType="Commodity"  >
+		update commodity set  cname=#{cname},price=#{price},unit=#{unit},cvalue=#{cvalue} where cid=#{cid}
+	</update>
+</mapper>
+
+
+
+
+
+
+

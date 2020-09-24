@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 设置mybatis的一些默认行为 -->
+	<settings>
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
+		<setting name="defaultExecutorType" value="REUSE"/>
+		<setting name="cacheEnabled" value="true"/>
+		<!-- 默认将数据表字段中的下划线_映射成实体类属性的驼峰式命名 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<!-- 设置JDBC日志的输出行为 -->
+		<setting name="logImpl" value="STDOUT_LOGGING"/>
+	</settings>
+	
+	<typeAliases>
+		<package name="com.study.ssm.entity"/>
+	</typeAliases>
+	
+	<plugins>
+	<!-- com.github.pagehelper为PageHelper类所在包名 -->
+	<plugin interceptor="com.github.pagehelper.PageHelper">
+		<!-- 方言 -->
+		<property name="dialect" value="mysql"/>
+		<!-- 该参数默认为false -->
+		<!-- 设置为true时，使用RowBounds分页会进行count查询 -->
+		<property name="rowBoundsWithCount" value="true"/>
+	</plugin>
+	</plugins>
+
+	<mappers>
+		<mapper resource="com/study/ssm/dao/EmployeeMapper.xml"/>
+		<mapper resource="com/study/ssm/dao/UserMapper.xml"/>
+		<mapper resource="com/study/ssm/dao/AgentMapper.xml"/>
+		<mapper resource="com/study/ssm/dao/CommodityMapper.xml"/>
+		<mapper resource="com/study/ssm/dao/OrdersMapper.xml"/>
+		<mapper resource="com/study/ssm/dao/YuanGongMapper.xml"/>
+		<mapper resource="com/study/ssm/dao/StockMapper.xml"/>
+	</mappers>
+
+</configuration>

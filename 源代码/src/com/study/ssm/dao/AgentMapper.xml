@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace(命名空间)需要和对应的接口的全限定性名保持一致 -->
+<mapper namespace="com.study.ssm.dao.IAgent">
+	<insert id="insertAgent" useGeneratedKeys="true" parameterType="Agent">
+		insert into agent values(#{anumber},#{aname},#{area},#{head},#{iname},#{contact},
+			#{fax},#{email})
+	</insert>
+	<select id="selectAll" resultType="Agent" >
+		select aname,anumber,area,head,iname,contact,fax,email from agent
+	</select>
+	<select id="selectAgentByAname" resultType="Agent" parameterType="String">
+		select aname,anumber,area,head,iname,contact,fax,email from agent where
+		  aname=#{_parameter}
+	</select>
+	<delete id="deleteAgent" parameterType="int"  >
+		delete from agent where anumber=#{_parameter}
+	</delete>
+	<update id="updateAgent" parameterType="Agent"  >
+		update agent set  aname=#{aname},head=#{head},iname=#{iname},contact=#{contact},fax=#{fax} where anumber=#{anumber}
+	</update>
+</mapper>
+
+
+
+
+
+
+

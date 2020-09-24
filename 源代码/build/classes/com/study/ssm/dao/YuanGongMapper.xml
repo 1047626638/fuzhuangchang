@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace(命名空间)需要和对应的接口的全限定性名保持一致 -->
+<mapper namespace="com.study.ssm.dao.IYuanGong">
+	<select id="selectAll" resultType="YuanGong">
+		select * from employee;
+	</select>
+	<select id="selectYuanGongById" resultType="YuanGong">
+		select * from employee where eid=#{eid};
+	</select>
+	<delete id="deleteYuanGong" parameterType="Integer">
+		delete from employee where eid=#{eid}
+	</delete>
+	<update id="updateYuganGong" parameterType="YuanGong">
+		update employee set evalue=#{evalue},sex=#{sex},age=#{age},edate=#{edate},ename=#{ename} where eid=#{eid}
+	</update>
+</mapper>
+
+
+
+
+
+
+

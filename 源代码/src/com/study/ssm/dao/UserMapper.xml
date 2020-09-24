@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace(命名空间)需要和对应的接口的全限定性名保持一致 -->
+<mapper namespace="com.study.ssm.dao.IUsermapper">
+	<resultMap type="Account" id="rmAccount">
+		<id column="username" property="username"/>
+		<result column="password" property="password"/>
+	<!-- 嵌套映射角色 -->
+	<association property="users" javaType="Users">
+		<id column="uid" property="uid"/>
+		<result column="uname" property="uname"/>
+		<result column="phone" property="phone"/>
+	</association>
+	</resultMap>
+	<select id="selectLoginUser" resultMap="rmAccount">
+		select * from account a,users u
+		where a.uid = u.uid and username=#{_parameter}
+	</select>
+	<insert id="insertUsers" >
+		insert into users values(#{uid},#{uname},#{phone})
+	</insert>
+	<insert id="insertAccount" >
+		insert into account values(#{username},#{password},#{users.uid}) 
+	</insert>
+	<select id="selectAll" resultMap="rmAccount">
+		select * from account a,users u where 
+		a.uid = u.uid and u.uid=#{u.uid} 
+	</select>
+	<delete id="deleteAccount" parameterType="int">
+		delete a.*,u.* from account a,users u where a.uid = u.uid and u.uid=#{u.uid}
+	</delete>
+</mapper>
+
+
+
+
+
+
+

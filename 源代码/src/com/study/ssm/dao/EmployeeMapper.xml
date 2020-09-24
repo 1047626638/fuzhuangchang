@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace(命名空间)需要和对应的接口的全限定性名保持一致 -->
+<mapper namespace="com.study.ssm.dao.IEmployeeMapper">
+	<insert id="insertEmployee" parameterType="Employee" useGeneratedKeys="true"
+		keyColumn="empno" keyProperty="empNo">
+		INSERT INTO emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) 
+		VALUES(#{empNo},#{ename},#{job},#{mgr},#{hiredate},#{sal},#{comm},#{deptNo})
+	</insert>
+	<!-- 使用标签动态生成SQL语句 -->
+	<insert id="insertMuiltipleEmp" parameterType="Employee"  useGeneratedKeys="true">
+		INSERT INTO emp(empno,ename,job,mgr,hiredate,sal,comm,deptno) VALUES
+		<foreach collection="list" item="emp" separator=",">
+			(#{emp.empNo},#{emp.ename},#{emp.job},#{emp.mgr},
+				#{emp.hiredate},#{emp.sal},#{emp.comm},#{emp.deptNo})
+		</foreach>
+	</insert>
+	<sql id="selectEmpSQL">
+		SELECT * FROM emp
+	</sql>
+	<select id="selectEmpLikeEname" parameterType="map" resultType="Employee">
+		<include refid="selectEmpSQL"/>
+		<where>
+			<if test="empNo!=null">
+				empno=#{empNo}
+			</if>
+			<if test="ename!=null and ename!=''">
+				AND ename LIKE '%${ename}%'
+			</if>
+			<if test="job!=null and job!=''">
+				AND job=#{job}
+			</if>
+		</where>
+	</select>
+	<!-- 只有一种条件成立则需要使用 choose when otherwise(switch case default) -->
+	<!-- trim可以实现在条件字句前+where关键字，并且覆盖相邻的AND/OR关键字，保证SQL语法是准确的 -->
+	<select id="selectEmpLikeEname2"  parameterType="map" resultType="Employee">
+		<include refid="selectEmpSQL"/>
+		<trim prefix="WHERE" prefixOverrides="AND|OR" >
+			<choose>
+				<when test="empNo!=null">
+					AND empno=#{empNo}
+				</when>		
+				<when test="ename!=null and ename!=''">
+					AND ename=#{ename}	
+				</when>
+				<when test="job!=null and job!=''">
+					AND job=#{job}
+				</when>
+				<otherwise>
+					AND job='KING'
+				</otherwise>
+			</choose>
+		</trim>
+	</select>
+	
+	<update id="updateEmp" parameterType="Employee" >
+		UPDATE emp 
+		<!-- 在所有的if判断前+set关键字，且去掉整个set结构最后的, -->
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="ename!=null and ename!=''">
+				ename=#{ename},
+			</if>
+			<if test="job!=null and job!=''">
+				job=#{job},
+			</if>
+			<if test="deptNo!=null and deptNo!=0">
+				deptno=#{deptNo}
+			</if>
+		</trim>
+		<!-- <set>
+			<if test="ename!=null and ename!=''">
+				ename=#{ename},
+			</if>
+			<if test="job!=null and job!=''">
+				job=#{job},
+			</if>
+			<if test="deptNo!=null and deptNo!=0">
+				deptno=#{deptNo}
+			</if>
+		</set> -->
+		WHERE empno=#{empNo}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+

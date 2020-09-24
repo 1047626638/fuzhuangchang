@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace(命名空间)需要和对应的接口的全限定性名保持一致 -->
+<mapper namespace="com.study.ssm.dao.IOrders">
+	<insert id="insertOrders" parameterType="Orders" >
+		insert into orders values(#{iorders},#{rorders},#{oamount},#{ramount},#{omoney},#{rmoney},#{amoney},#{odate})
+	</insert>
+	<select id="selectOrders" parameterType="Date" resultType="Orders">
+		select * from orders where odate=#{odate}
+	</select>
+	<select id="selectAll" resultType="Orders">
+		select * from orders
+	</select>
+	<update id="updateOrders" parameterType="Orders">
+		update orders set ioders=#{iorders},rorders=#{rorders},oamount=#{oamount},omoney=#{omoney},
+		rmoney={rmoney},amoney=#{amoney},odate=#{odate} where odate=#{odate}
+	</update>
+</mapper>
+
+
+
+
+
+
+
